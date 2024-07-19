@@ -55,7 +55,8 @@ def userMain_menu():
             viewAvailableCars()
 
         elif (num == 2):
-            pass # Data to contact Dealership
+            # Data to contact Dealership
+            contactDealership()
         elif (num == 3):
             print("Logging out.")
             break
@@ -130,16 +131,47 @@ def viewAvailableCars():
         connection = psycopg2.connect(**params)
         crsr = connection.cursor()
         
-        crsr.execute("SELECT year, make, model, mileage, amount FROM cars")
+        crsr.execute("""
+            SELECT cars.year, cars.make, cars.model, cars.mileage, cars.amount, branch.branch_name
+            FROM cars
+            JOIN branch ON cars.branch_id = branch.branch_id
+        """)
         cars = crsr.fetchall()
         
         if cars:
             print("Available Cars:")
             print("[] - table column name")
             for idx, car in enumerate(cars, start=1):
-                print(f"{idx}. {car[0]} {car[1]} {car[2]} - mileage: {car[3]} - Buy price: {car[4]}")
+                year, make, model, mileage, amount, branch_name = car
+                print(f"{idx}. {year} {make} {model} - mileage: {mileage} - Buy price: {amount} - Branch - {branch_name.split(' - ')[1]}")
         else:
             print("No available cars.")
+        
+        crsr.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if connection is not None:
+            connection.close()
+        
+    input("Press Enter to return to the main menu...")
+
+def contactDealership():
+    connection = None
+    try:
+        params = config()
+        connection = psycopg2.connect(**params)
+        crsr = connection.cursor()
+        
+        crsr.execute("SELECT branch_name, branch_phonenumber FROM branch")
+        branches = crsr.fetchall()
+        
+        if branches:
+            print("Contact Dealership:")
+            for idx, branch in enumerate(branches, start=1):
+                print(f"{idx}. {branch[0]} - {branch[1]}")
+        else:
+            print("No branches available.")
         
         crsr.close()
     except (Exception, psycopg2.DatabaseError) as error:
