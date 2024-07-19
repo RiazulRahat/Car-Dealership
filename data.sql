@@ -36,3 +36,21 @@ INSERT INTO empUsers (username, password) VALUES
 ('Arnob', 'Arnob'),
 ('JohnDoe', 'JohnDoe'),
 ('JaneSmith', 'JaneSmith');
+
+-- Insert data into Employees table using data from empUsers table
+INSERT INTO Employees (employeeID, F_Name, L_Name, email, phoneNumber, branchID)
+VALUES
+(1, 'Riaz', 'Employee', 'riaz@example.com', '123-456-7890', 1),
+(2, 'AB', 'Employee', 'ab@example.com', '234-567-8901', 2),
+(3, 'Arnob', 'Employee', 'arnob@example.com', '345-678-9012', 3),
+(4, 'John', 'Doe', 'johndoe@example.com', '456-789-0123', 4),
+(5, 'Jane', 'Smith', 'janesmith@example.com', '567-890-1234', 5);
+
+-- Insert data into Customers table using data from users table
+INSERT INTO Customers (CustomerID, PhoneNumber, Email, F_Name, L_Name, DOB)
+VALUES
+(1, '123-456-7890', 'abc@example.com', 'ABC', 'Customer', '1990-01-01'),
+(2, '234-567-8901', 'riazc@example.com', 'Riaz', 'Customer', '1985-02-14'),
+(3, '345-678-9012', 'arnobc@example.com', 'Arnob', 'Customer', '1992-03-15'),
+(4, '456-789-0123', 'johnc@example.com', 'John', 'Customer', '1988-04-20'),
+(5, '567-890-1234', 'janec@example.com', 'Jane', 'Customer', '1995-05-25');
