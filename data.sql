@@ -51,3 +51,19 @@ CREATE TABLE empUsers (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(50) NOT NULL
 );
+
+-- Insert data into users table
+INSERT INTO users (username, password) VALUES
+('ABC', 'ABC'),
+('RiazC', 'RiazC'),
+('ArnobC', 'ArnobC'),
+('JohnC', 'JohnC'),
+('JaneC', 'JaneC');
+
+-- Insert data into empUsers table
+INSERT INTO empUsers (username, password) VALUES
+('Riaz', 'Riaz'),
+('AB', 'AB'),
+('Arnob', 'Arnob'),
+('JohnDoe', 'JohnDoe'),
+('JaneSmith', 'JaneSmith');
