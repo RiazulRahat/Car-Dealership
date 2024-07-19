@@ -109,6 +109,23 @@ CREATE TABLE Buy (
     FOREIGN KEY (car_id) REFERENCES Cars(car_id)
 );
 
+-- Tables for username and password
+
+-- customer
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(50) NOT NULL
+);
+
+-- employee
+CREATE TABLE empUsers (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(50) NOT NULL
+);
+
+
 -- Create the function to set is_available to FALSE
 CREATE OR REPLACE FUNCTION set_car_unavailable() RETURNS TRIGGER AS $$
 BEGIN
