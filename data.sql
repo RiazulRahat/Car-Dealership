@@ -54,3 +54,32 @@ VALUES
 (3, '345-678-9012', 'arnobc@example.com', 'Arnob', 'Customer', '1992-03-15'),
 (4, '456-789-0123', 'johnc@example.com', 'John', 'Customer', '1988-04-20'),
 (5, '567-890-1234', 'janec@example.com', 'Jane', 'Customer', '1995-05-25');
+
+-- Insert data into Address table
+INSERT INTO Address (street, city, state, zip) VALUES
+('123 Main St', 'Springfield', 'IL', '62701'),
+('456 Oak St', 'Lincoln', 'NE', '68508'),
+('789 Pine St', 'Madison', 'WI', '53703'),
+('101 Maple St', 'Salem', 'OR', '97301'),
+('202 Birch St', 'Austin', 'TX', '73301'),
+('303 Cedar St', 'Denver', 'CO', '80203'),
+('404 Elm St', 'Raleigh', 'NC', '27601'),
+('505 Ash St', 'Albany', 'NY', '12201'),
+('606 Willow St', 'Tallahassee', 'FL', '32301'),
+('707 Cherry St', 'Sacramento', 'CA', '95814');
+
+-- Insert data into BranchAddress table
+INSERT INTO BranchAddress (branch_id, addr_id) VALUES
+(1, 1),  -- Urban Customs - Downtown
+(2, 2),  -- Urban Customs - Uptown
+(3, 3),  -- Urban Customs - Suburban
+(4, 4),  -- Urban Customs - Eastside
+(5, 5);  -- Urban Customs - Westside
+
+-- Insert data into CustomerAddress table
+INSERT INTO CustomerAddress (addr_id, customer_id) VALUES
+(6, 1),  -- Customer 1
+(7, 2),  -- Customer 2
+(8, 3),  -- Customer 3
+(9, 4),  -- Customer 4
+(10, 5);  -- Customer 5
