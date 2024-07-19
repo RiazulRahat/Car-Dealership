@@ -36,3 +36,18 @@ INSERT INTO branch (branch_id, branch_phonenumber, branch_name) VALUES
 (4, '456-789-0123', 'Urban Customs - Eastside'),
 (5, '567-890-1234', 'Urban Customs - Westside');
 
+-- Tables for username and password
+
+-- customer
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(50) NOT NULL
+);
+
+-- employee
+CREATE TABLE empUsers (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(50) NOT NULL
+);
