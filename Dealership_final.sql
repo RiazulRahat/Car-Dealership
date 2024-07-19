@@ -1,3 +1,4 @@
+
 -- Create the Address table
 CREATE TABLE Address (
     addr_id SERIAL PRIMARY KEY,
@@ -45,6 +46,7 @@ CREATE TABLE BranchAddress (
 -- Create the Cars table
 CREATE TABLE Cars (
     car_id SERIAL PRIMARY KEY,
+    branch_id INT NOT NULL,
     make VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
     year INT NOT NULL,
@@ -54,7 +56,8 @@ CREATE TABLE Cars (
     is_available BOOLEAN DEFAULT TRUE,
     amount DECIMAL(10, 2) NOT NULL,
     amount_loan DECIMAL(10, 2),
-    color VARCHAR(30) NOT NULL
+    color VARCHAR(30) NOT NULL,
+    FOREIGN KEY (branch_id) REFERENCES Branch(branch_id)
 );
 
 -- Create the HasCar table
@@ -94,7 +97,7 @@ CREATE TABLE Loan (
     payment_id INT PRIMARY KEY,
     car_id INT NOT NULL,
     loan_time INT NOT NULL, -- Loan time in months
-    FOREIGN KEY (payment_id) REFERENCES Payments(payment_id)
+    FOREIGN KEY (payment_id) REFERENCES Payments(payment_id),
     FOREIGN KEY (car_id) REFERENCES Cars(car_id)
 );
 
