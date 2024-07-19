@@ -1,5 +1,5 @@
 -- Add car data
-INSERT INTO cars (car_id, make, model, year, mileage, iselectric, ishybrid, isavailable, amount, amount_lease, amount_loan, color) VALUES
+INSERT INTO cars (car_id, make, model, year, mileage, is_electric, is_hybrid, is_available, amount, amount_loan, color, branch_id) VALUES
 (1, 'Toyota', 'Camry', 2020, 15000, FALSE, FALSE, TRUE, 20000, 250, 'White', 1),
 (2, 'Honda', 'Civic', 2019, 20000, FALSE, FALSE, TRUE, 18000, 230, 'Black', 1),
 (3, 'Tesla', 'Model S', 2021, 10000, TRUE, FALSE, TRUE, 70000, 900, 'Red', 2),
