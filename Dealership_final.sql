@@ -60,15 +60,6 @@ CREATE TABLE Cars (
     FOREIGN KEY (branch_id) REFERENCES Branch(branch_id)
 );
 
--- Create the HasCar table
-CREATE TABLE HasCar (
-    branch_id INT NOT NULL,
-    car_id INT NOT NULL,
-    PRIMARY KEY (branch_id, car_id),
-    FOREIGN KEY (branch_id) REFERENCES Branch(branch_id),
-    FOREIGN KEY (car_id) REFERENCES Cars(car_id)
-);
-
 -- Create the Employees table
 CREATE TABLE Employees (
     employeeID SERIAL PRIMARY KEY,
