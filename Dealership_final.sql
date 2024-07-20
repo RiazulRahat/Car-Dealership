@@ -131,3 +131,37 @@ CREATE TRIGGER before_insert_payment
 BEFORE INSERT ON Payments
 FOR EACH ROW
 EXECUTE FUNCTION set_car_unavailable();
+
+
+-- Trigger for Prevent a car from being deleted if it has any associated payments
+
+CREATE OR REPLACE FUNCTION prevent_car_deletion()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM Payments WHERE car_id = OLD.car_id) THEN
+        RAISE EXCEPTION 'Cannot delete car with associated payments';
+    END IF;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_prevent_car_deletion
+BEFORE DELETE ON Cars
+FOR EACH ROW
+EXECUTE FUNCTION prevent_car_deletion();
+
+-- Trigger for when a car is sold or loaned, its availability status should be updated
+CREATE OR REPLACE FUNCTION update_car_availability()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE Cars
+    SET is_available = FALSE
+    WHERE car_id = NEW.car_id;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_update_car_availability
+AFTER INSERT ON Payments
+FOR EACH ROW
+EXECUTE FUNCTION update_car_availability();
