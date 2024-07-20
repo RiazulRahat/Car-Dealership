@@ -117,22 +117,6 @@ CREATE TABLE empUsers (
 );
 
 
--- Create the function to set is_available to FALSE
-CREATE OR REPLACE FUNCTION set_car_unavailable() RETURNS TRIGGER AS $$
-BEGIN
-    -- Update the Cars table to set is_available to FALSE for the car in the new payment
-    UPDATE Cars SET is_available = FALSE WHERE car_id = NEW.car_id;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create the trigger for before insert on Payments table
-CREATE TRIGGER before_insert_payment
-BEFORE INSERT ON Payments
-FOR EACH ROW
-EXECUTE FUNCTION set_car_unavailable();
-
-
 -- Trigger for Prevent a car from being deleted if it has any associated payments
 
 CREATE OR REPLACE FUNCTION prevent_car_deletion()
@@ -165,3 +149,26 @@ CREATE TRIGGER trigger_update_car_availability
 AFTER INSERT ON Payments
 FOR EACH ROW
 EXECUTE FUNCTION update_car_availability();
+
+--Trigger for, if buying a car that is 5 or more years old then the loan duration cannot be more than 3 years.
+CREATE OR REPLACE FUNCTION enforce_loan_time_limit()
+RETURNS TRIGGER AS $$
+DECLARE
+    car_year INT;
+BEGIN
+    SELECT year INTO car_year
+    FROM Cars
+    WHERE car_id = NEW.car_id;
+
+    IF (car_year <= EXTRACT(YEAR FROM NOW()) - 5) AND (NEW.loan_time > 36) THEN
+        RAISE EXCEPTION 'Loan time exceeds the allowed limit for this car.';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_insert_loan
+BEFORE INSERT ON Loan
+FOR EACH ROW
+EXECUTE FUNCTION enforce_loan_time_limit();
